@@ -1,91 +1,65 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import prisma from "@/lib/prisma";
+import Image from "next/image";
+import Carousel from "./comopents/Carousel";
+import Featured from "./comopents/Featured";
 
-const inter = Inter({ subsets: ['latin'] })
+type Movie = {
+  id: number;
+  title: string;
+  year: number;
+  description: string;
+  slug: string;
+  movileImage?: string | null;
+};
 
-export default function Home() {
+const slides = [
+  {
+    url: "https://mcdn.wallpapersafari.com/medium/95/29/cAeyxs.jpg",
+    title: "Breaking-bad",
+  },
+  {
+    url: "https://mcdn.wallpapersafari.com/medium/5/81/9nhGyP.jpg",
+    title: "Green-bad",
+  },
+  {
+    url: "https://mcdn.wallpapersafari.com/medium/95/29/cAeyxs.jpg",
+    title: "Breaking-bad",
+  },
+];
+
+export default async function page() {
+  const movies: Movie[] = await prisma.movie.findMany();
+
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
+    <div className="w-full md:10/12 lg:w-3/4 mx-auto">
+      <div className="md:h-[25rem] h-[14rem]  m-auto">
+        <Carousel slides={movies} />
+      </div>
+
+      <section>
+        <Featured movie={movies} />
+      </section>
+
+      {movies.map((movie) => (
+        <section
+          key={movie.id}
+          className=" flex flex-col w-full md:w-11/12  lg:w-3/4 my-2 p-5  mx-auto justify-center items-center hover:border bg-[#292828] text-center font-bold text-slate-50  rounded  hover:shadow"
+        >
+          {movie.movileImage && (
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+              src={movie.movileImage}
+              alt=""
+              width={500}
+              height={500}
+              className="w-auto h-auto"
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          )}
+          <h1 className="text-xl"> {movie.title}</h1>
+          <p className="font-thin">Year: {movie.year}</p>
+          <p className=" font-light">{movie.description}</p>
+        </section>
+      ))}
+    </div>
+  );
 }
