@@ -2,33 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.swiper-button-next, .swiper-button-prev {
-    color: white;
-    font-weight: 300;
-    font-size: smaller !important;
-  }
-  
-  .swiper-pagination-bullet {
-    background-color: white;
-  }
-
-
-.inlines{
-    vertical-align: middle;
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  font-weight: 300;
+  font-size: smaller !important;
 }
 
-.dropdown-text{
-    @apply w-full hover:bg-slate-600  px-3 py-2
+.swiper-pagination-bullet {
+  background-color: white;
 }
 
-.icons{
-    @apply inline mx-2 text-2xl font-bold
+.inlines {
+  vertical-align: middle;
 }
 
+.icons {
+  @apply inline mx-2 text-2xl font-bold;
+}
 
+.langDropdown-text {
+  @apply w-full border-[#6d6d6d] hover:bg-slate-600 pl-5 px-3 py-2 font-normal;
+}
 
+.dropdown-text {
+  @apply w-full hover:bg-yellow-600  px-3 py-2;
+}
 
-.langDropdown-text{
-   @apply w-full border-[#6d6d6d] hover:bg-slate-600 pl-5 px-3 py-2 font-normal
+.sideBar {
+  @apply flex flex-col items-center duration-200   z-30 h-screen  space-y-2  absolute left-0 top-0 bg-gray-900;
 }

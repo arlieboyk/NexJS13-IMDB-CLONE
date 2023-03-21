@@ -85,7 +85,7 @@ function Carousel({ slides }: { slides: Movie[] }) {
         <div
           /* image */
           style={sliderImage2}
-          className="absolute hidden md:block  md:w-[7rem] md:h-[10rem] bottom-0 z-20 bg-cover shadow-md shadow-black"
+          className="absolute hidden md:block  md:w-[7rem] md:h-[10rem] bottom-0 z-10 bg-cover shadow-md shadow-black"
         >
           <div className="absolute inset-1 ">
             <AiOutlinePlus className="text-yellow-400 hover:scale-110 p-1  rounded-full hover:bg-slate-400/50 h-8 w-8" />

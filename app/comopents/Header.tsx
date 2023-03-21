@@ -8,13 +8,12 @@ import SelectLanguage from "./SelectLanguage";
 import SideBarNav from "./SideBarNav";
 
 const handleGoogleSignIn = async () => {
-  signIn("google", { callbackUrl: " https://8c99-120-29-111-120.ap.ngrok.io" });
+  signIn("google", { callbackUrl: "http://localhost:3000" });
 };
 
 //  const handleGoogleSignIn = async () => {
 //   signIn("google", {callbackUrl:'http://localhost:3000'});
 // };
-
 
 async function handelSignout() {
   signOut({ callbackUrl: "http://localhost:3000/images" });
@@ -87,7 +86,9 @@ function Header() {
               </button>
             )}
             {session ? (
-              <p className="text-gray-400">{session.user?.name?.split(" ")[0]}</p>
+              <p className="text-gray-400">
+                {session.user?.name?.split(" ")[0]}
+              </p>
             ) : (
               <p>Guest</p>
             )}

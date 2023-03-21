@@ -4,15 +4,12 @@ import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FiMonitor } from "react-icons/fi";
 import { MdLabel, MdLocalMovies } from "react-icons/md";
-import { useSession, signIn, getSession } from "next-auth/react";
+import { useSession, signIn, getSession, signOut } from "next-auth/react";
 
 function SideBarNav() {
   const [sideBar, setSideBar] = useState(false);
 
-  const sideBarToggle = () => {
-    setSideBar(!sideBar);
-  };
-
+  /* disable scroll  */
   useEffect(() => {
     if (sideBar) {
       document.body.style.overflow = "hidden";
@@ -21,36 +18,43 @@ function SideBarNav() {
     }
   }, [sideBar]);
 
-  if (typeof window !== "undefined") {
-  }
+  const sideBarToggle = () => {
+    setSideBar(!sideBar);
+  };
 
   const handleSignIn = () => {
     signIn("google", { callbackUrl: "http://localhost:3000" });
   };
 
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "http://localhost:3000" });
+  };
+  const { data: session } = useSession();
   return (
-    <div
-      onClick={sideBarToggle}
-      className="flex items-center justify-center px-2  rounded-md"
-    >
-      <div className="flex items-center  px-2  cursor-pointer rounded-md hover:bg-[#1f1f1f]">
-        <p id="sideBarNav" className="inline-block   ">
+    <div className="flex items-center justify-center px-2  rounded-md">
+      <div
+        onClick={sideBarToggle}
+        className="flex items-center  px-2  cursor-pointer rounded-md hover:bg-[#1f1f1f]"
+      >
+        <p
+          onClick={sideBarToggle}
+          className="inline-block cursor-pointer  hover:bg-[#1f1f1f] "
+        >
           <span className="w-6 h-0.5 block bg-white"></span>
           <span className="w-6 h-0.5 block my-1 bg-white"></span>
           <span className="w-6 h-0.5 block bg-white"></span>
         </p>
         <p className="hidden md:inline-block mx-2 py-2 font-bold ">Menu</p>
       </div>
-      {/* sidebar */}
 
-      <div
-        className={`flex flex-col ${
-          sideBar ? "w-48" : "w-0"
-        } duration-200  z-30 h-screen  space-y-2  absolute left-0 top-0 bg-gray-900`}
-      >
+      {/* sidebar */}
+      <div className={`sideBar ${sideBar ? "  w-48 " : "w-0"}`}>
         {sideBar && (
           <>
-            <div className="w-full flex relative bg-slate-500 py-2 ">
+            <div
+              className="w-full flex relative bg-slate-500 py-2 "
+              onClick={sideBarToggle}
+            >
               <AiOutlineClose className="h-8 w-8 rounded-full relative left-36  p-2 self-end hover:font-bold hover:bg-slate-900" />
             </div>
             <p className="dropdown-text">
@@ -73,9 +77,23 @@ function SideBarNav() {
               <MdLabel className="icons " /> <p className="inline"> Keywords</p>
             </p>
 
-            <button onClick={handleSignIn} className="cursor-pointer ">
-              Sign in
-            </button>
+            <div className="absolute  bottom-6 ">
+              {session ? (
+                <button
+                  onClick={handleSignOut}
+                  className="cursor-pointer px-5 py-3 bg-yellow-400 hover:bg-yellow-300 rounded-md  "
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <button
+                  onClick={handleSignIn}
+                  className="cursor-pointer px-5 py-3 bg-yellow-400 hover:bg-yellow-300 rounded-md  "
+                >
+                  Sign in
+                </button>
+              )}
+            </div>
           </>
         )}
       </div>
