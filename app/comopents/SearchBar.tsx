@@ -27,13 +27,9 @@ function SearchBar() {
         </div>
         {/* dropdown */}
         <div
-<<<<<<< HEAD
-          className={`absolute  ${isDropdownOpen ? "transform opacity-100" : "opacity-0"} top-[3rem]  space-y-3 flexf z-[99] lex-col items-center justify-center  transition-all ease-in-out  bg-[#000000de] text-white`}
-=======
           className={`absolute  ${
             isDropdownOpen ? "transform opacity-100" : "opacity-0"
           } top-[3rem]  space-y-3 flexf lex-col items-center justify-center  transition-all ease-in-out  bg-[#000000de] text-white`}
->>>>>>> 55f39a88e0b1512a776b4eb0ff52c165f91cf0c9
         >
           {isDropdownOpen && (
             <>
