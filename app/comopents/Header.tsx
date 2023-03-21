@@ -1,5 +1,6 @@
 "use client";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
@@ -14,7 +15,6 @@ const handleGoogleSignIn = async () => {
 //  const handleGoogleSignIn = async () => {
 //   signIn("google", {callbackUrl:'http://localhost:3000'});
 // };
-
 
 async function handelSignout() {
   signOut({ callbackUrl: "http://localhost:3000/images" });
@@ -48,9 +48,11 @@ function Header() {
         <nav className="bg-black md:px-2 py-2 lg:px-12 text-white d flex justify-between lg:justify-center space-x-3 items-center">
           {/* logo and humburger */}
           <div className="flex md:flex-row space-x-1 flex-row-reverse items-center">
-            <span className="px-3 py-1 bg-yellow-300 text-black font-bold rounded-md text-xl ">
-              IMDb
-            </span>
+            <Link href={"/"}>
+              <span className="px-3 py-1 bg-yellow-300 text-black font-bold rounded-md text-xl hover:bg-yellow-400 hover:scale-105 ">
+                IMDb
+              </span>
+            </Link>
             <SideBarNav />
           </div>
           {/* searchbar */}
@@ -87,7 +89,9 @@ function Header() {
               </button>
             )}
             {session ? (
-              <p className="text-gray-400">{session.user?.name?.split(" ")[0]}</p>
+              <p className="text-gray-400">
+                {session.user?.name?.split(" ")[0]}
+              </p>
             ) : (
               <p>Guest</p>
             )}

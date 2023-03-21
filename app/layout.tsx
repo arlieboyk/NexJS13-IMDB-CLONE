@@ -19,7 +19,9 @@ export default function RootLayout({
         <SessionWrapper>
           <Header />
           <ChakraWrapper>
-            <main>{children}</main>
+            <main className="flex flex-col justify-center items-center">
+              {children}
+            </main>
           </ChakraWrapper>
         </SessionWrapper>
       </body>

@@ -1,28 +1,33 @@
-import { handleClientScriptLoad } from "next/script";
+"use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
-type InputProp = {
-  handleSubmit?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  value: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+function Input() {
+  const router = useRouter();
+  const searchUrl = useSearchParams();
+  const [search, setSearch] = useState("");
 
-function Input(props: InputProp) {
+  const onSearch = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    /* get search query */
+    const searchQuery = searchUrl ? searchUrl.get("query") : null;
+
+    /* encoded  */
+    const encodedSearchQuery = encodeURI(search);
+    /* router to set query to url */
+    router.push(`/search?=${encodedSearchQuery}`);
+  };
   return (
-    <div className="space-x-3">
+    <form onSubmit={onSearch} className="space-x-3 w-full">
       <input
         type="text"
-        value={props.value}
-        onChange={props.handleChange}
-        className="text-black px-4 py-1 border "
+        value={search}
+        onChange={(event) => setSearch(event.target.value)}
+        className="w-full inline px-2 py-1  outline-none "
       />
-      <button
-        onClick={props.handleSubmit}
-        className="bg-indigo-400 text-white font-seimbold px-4 py-2 rounded-md"
-      >
-        Submit
-      </button>
-    </div>
+    </form>
   );
 }
 
