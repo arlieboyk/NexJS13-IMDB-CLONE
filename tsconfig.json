@@ -36,7 +36,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/api/getTodo.js",
-    "app/api/hello/route.ts",
+    "app/api/getMovie/route.ts",
     "app/comopents/Carousel.jsx",
     "E:\\Documents\\Programming\\Typescript\\2ndday - with next todo list\\todo-list\\.next/types/**/*.ts"
   ],
