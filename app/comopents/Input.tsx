@@ -2,35 +2,37 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+interface Props {
+  searchParams: string;
+}
 
-function Input() {
+function Input({ searchParams }: Props) {
   const router = useRouter();
   const searchUrl = useSearchParams();
   const [search, setSearch] = useState("");
 
   const getData = async () => {
-    const res =
-      (await fetch("/api/search"),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ search }),
-      });
-    console.log("response", res);
+    const encodedSearchQuery = encodeURI(search);
+    const res = await fetch(`/api/search?query=${encodedSearchQuery}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log("response", data);
   };
 
   const onSearch = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    console.log("query params: ", searchParams);
     /* get search query */
     const searchQuery = searchUrl ? searchUrl.get("query") : null;
 
     /* encoded  */
     const encodedSearchQuery = encodeURI(search);
     /* router to set query to url */
-    router.push(`/search?=${encodedSearchQuery}`);
+    router.push(`/movieId?=${encodedSearchQuery}`);
     getData();
   };
   return (

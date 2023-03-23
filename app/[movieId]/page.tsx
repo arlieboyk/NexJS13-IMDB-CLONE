@@ -1,7 +1,5 @@
-import React from "react";
-import prisma from "@/lib/prisma";
 interface Props {
-  params: { movieId: number };
+  searchParams: string;
 }
 
 type Movie = {
@@ -13,12 +11,30 @@ type Movie = {
   movileImage?: string | null;
 };
 
-async function page({ params }: Props, searchParams: any) {
-  console.log("id:", params.movieId);
+async function page({ searchParams }: Props) {
+  console.log(searchParams);
+
+  const getData = async () => {
+    const res = await fetch(`/api/search?query=${searchParams}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log("response", data);
+  };
+
+  getData();
 
   return (
     <>
-      <h1 className="text-white font-bold">params: {params.movieId}</h1>
+      <button
+        onClick={() => getData}
+        className="px-4 py-2 rounded-md bg-yellow-500"
+      >
+        getData
+      </button>
     </>
   );
 }
