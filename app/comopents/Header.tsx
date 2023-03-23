@@ -9,7 +9,7 @@ import SelectLanguage from "./SelectLanguage";
 import SideBarNav from "./SideBarNav";
 
 const handleGoogleSignIn = async () => {
-  signIn("google", { callbackUrl: " https://8c99-120-29-111-120.ap.ngrok.io" });
+  signIn("google", { callbackUrl: "http://localhost:3000" });
 };
 
 //  const handleGoogleSignIn = async () => {
