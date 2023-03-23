@@ -8,7 +8,20 @@ function Input() {
   const searchUrl = useSearchParams();
   const [search, setSearch] = useState("");
 
-  const onSearch = (event: React.FormEvent) => {
+  const getData = async () => {
+    const res =
+      (await fetch("/api/search"),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ search }),
+      });
+    console.log("response", res);
+  };
+
+  const onSearch = async (event: React.FormEvent) => {
     event.preventDefault();
 
     /* get search query */
@@ -18,6 +31,7 @@ function Input() {
     const encodedSearchQuery = encodeURI(search);
     /* router to set query to url */
     router.push(`/search?=${encodedSearchQuery}`);
+    getData();
   };
   return (
     <form onSubmit={onSearch} className="space-x-3 w-full">
